@@ -1,0 +1,125 @@
+experiment:
+  name: VANTA-default
+  random_seed: 42
+  repetitions: 30
+
+network:
+  source:
+    subnet: 10.10.0.0/24
+    gateway: 10.10.0.1
+    legitimate_clients: 50
+    attack_sources: 100
+
+  internal:
+    subnet: 172.16.0.0/30
+    ingress_address: 172.16.0.1
+    prefix_router_address: 172.16.0.2
+
+  target:
+    prefix: 10.0.0.0/24
+    gateway: 10.0.0.254
+    terminal_capacity: 253
+    aur: 0.10
+    pvr: 1.00
+
+  links:
+    # Access links retain no bandwidth cap; the routed internal link is the
+    # controlled bottleneck. All configured rate limits use HFSC.
+    source_access_bandwidth_mbps: null
+    source_access_delay_ms: 1
+    target_access_bandwidth_mbps: null
+    target_access_delay_ms: 1
+    internal_bandwidth_mbps: 100
+    internal_delay_ms: 5
+    queue_size_packets: 1000
+
+runtime:
+  host_directory: /tmp/vanta/hosts
+
+traffic:
+  legitimate:
+    tcp_ports: [80, 443, 8080]
+    udp_ports: [53, 5201]
+    tcp_probability: 0.60
+    min_packet_size: 128
+    max_packet_size: 1400
+    min_interval_seconds: 0.002
+    max_interval_seconds: 0.050
+    connect_timeout_seconds: 0.50
+    response_timeout_seconds: 0.05
+    stats_interval_seconds: 1.0
+    duration_seconds: null
+
+attack:
+  udp_ports: [5201]
+  attack_rate_pps: 1000
+  packet_size: 1200
+  simultaneous_targets: 100
+  target_scope: active
+  stats_interval_seconds: 1.0
+  duration_seconds: null
+
+telemetry:
+  host_directory: /tmp/vanta/hosts/telemetry
+  prefix_file: /tmp/vanta/telemetry/prefix.json
+  router_name: r_prefix
+  interface: r_prefix-eth1
+  stats_interval_seconds: 1.0
+  minimum_interval_seconds: 0.001
+
+  # Destination resource telemetry is process-local. CPU utilization is
+  # normalized to one service CPU core. Memory utilization is RSS divided by
+  # this explicit per-service reference, not by the complete VM memory.
+  process_cpu_capacity_cores: 1.0
+  process_memory_reference_bytes: 268435456
+  resource_cpu_weight: 0.50
+
+detector:
+  # Host/hybrid evidence requires at least three strongly anomalous features
+  # out of five. Prefix-only operation uses two strongly anomalous prefix
+  # features, which is appropriate when host visibility is unavailable.
+  decision_threshold: 0.60
+  host_threshold: 0.60
+  prefix_threshold: 0.40
+  suspicious_threshold: 0.40
+  lambda_sigma: 3.0
+
+visibility:
+  prefix_rate_threshold_bps: 5000000
+  prefix_fanout_threshold: 5.0
+  host_rate_threshold_bps: 1000000
+  host_source_threshold: 5.0
+  host_attack_score_threshold: 0.55
+  prefix_attack_score_threshold: 0.40
+  minimum_destination_rate_bps: 1.0
+  destination_rate_sigma: 6.0
+  # No fixed absolute floor: diffuse attacks can remain below 100 kb/s
+  # per target. Address-specific robust benign baselines provide the bound.
+  minimum_destination_attack_rate_bps: 0
+  minimum_destination_baseline_std_bps: 1000
+  ewma_alpha: 0.35
+  low_visibility_threshold: 0.25
+  minimum_confidence: 0.05
+
+fusion:
+  tau_low: 0.10
+  tau_high: 0.80
+  threshold: 0.60
+  suspicious_threshold: 0.40
+  prefix_only_threshold: 0.40
+  ewma_alpha: 1.0
+  minimum_confidence: 0.0
+  confidence_exponent: 1.0
+
+  # Corroboration paths validated offline on the complete 72-round
+  # trace set. They complement, rather than replace, the adaptive
+  # weighted score and retain the existing 0.60/0.40 thresholds.
+  host_support_threshold: 0.60
+  prefix_support_threshold: 0.3333333333333333
+
+comparison:
+  # Kept disabled for the validated VANTA-only campaign. The paper comparison
+  # runner enables gateway packet sketches for every active destination
+  # explicitly with --export-comparison-traces. Host telemetry remains limited
+  # to the monitored subset.
+  export_packet_sketches: false
