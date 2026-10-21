@@ -1,0 +1,36 @@
+cff-version: 1.2.0
+message: "If you use this artifact, please cite the accompanying VANTA/PVR preprint."
+title: "VANTA-PVR Artifact"
+version: "1.0-arxiv"
+date-released: 2026-10-21
+license: MIT
+authors:
+  - family-names: "Naït-Abdesselam"
+    given-names: "Farid"
+  - family-names: "Lahlou"
+    given-names: "Laaziz"
+  - family-names: "Bentaoussy"
+    given-names: "Doha"
+  - family-names: "Lege"
+    given-names: "Hugo"
+  - family-names: "Lin"
+    given-names: "Eve"
+  - family-names: "Kara"
+    given-names: "Nadjia"
+preferred-citation:
+  type: article
+  title: "Prefix Visibility Ratio: Quantifying Partial Observability in Carpet Bombing Detection"
+  year: 2026
+  authors:
+    - family-names: "Naït-Abdesselam"
+      given-names: "Farid"
+    - family-names: "Lahlou"
+      given-names: "Laaziz"
+    - family-names: "Bentaoussy"
+      given-names: "Doha"
+    - family-names: "Lege"
+      given-names: "Hugo"
+    - family-names: "Lin"
+      given-names: "Eve"
+    - family-names: "Kara"
+      given-names: "Nadjia"
