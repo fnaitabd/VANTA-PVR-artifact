@@ -1,0 +1,7 @@
+VANTA-PVR public artifact release: v1.0-arxiv
+Paper: Prefix Visibility Ratio: Quantifying Partial Observability in Carpet Bombing Detection
+Validated VANTA campaign: 2,160/2,160 completed runs
+Primary campaign CSV: results/published/vanta_final_30reps.csv.gz
+Primary verification command: make verify-results
+Comparative methods: NetRadar-S, FlowLens-S, Whisper-S (task-adapted references)
+Scope: validated paper campaign only; ongoing experimental branches excluded
