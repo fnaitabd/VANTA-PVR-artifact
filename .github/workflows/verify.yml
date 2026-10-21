@@ -3,18 +3,54 @@ name: Artifact checks
 on:
   push:
   pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   verify:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+
+      - name: Download published artifact
+        shell: bash
+        run: |
+          curl --fail --location --retry 3 \
+            "https://github.com/fnaitabd/VANTA-PVR-artifact/releases/download/v1.0-arxiv/VANTA-PVR-artifact-v1.0-arxiv.zip" \
+            --output artifact.zip
+
+          unzip -q artifact.zip -d artifact
+
+          script_path="$(find "$GITHUB_WORKSPACE/artifact" \
+            -type f -path '*/scripts/verify_paper_results.py' \
+            -print -quit)"
+
+          if [ -z "$script_path" ]; then
+            echo "::error::Verification script missing from release ZIP"
+            exit 1
+          fi
+
+          artifact_dir="$(dirname "$(dirname "$script_path")")"
+          echo "ARTIFACT_DIR=$artifact_dir" >> "$GITHUB_ENV"
+
       - name: Install Python dependencies
+        working-directory: ${{ env.ARTIFACT_DIR }}
         run: python -m pip install -r requirements.txt
+
       - name: Compile Python sources
-        run: python -m compileall -q vanta experiments scripts plots
+        working-directory: ${{ env.ARTIFACT_DIR }}
+        shell: bash
+        run: |
+          for directory in vanta experiments scripts plots; do
+            test -d "$directory"
+          done
+          python -m compileall -q vanta experiments scripts plots
+
       - name: Verify published results
+        working-directory: ${{ env.ARTIFACT_DIR }}
         run: python scripts/verify_paper_results.py
