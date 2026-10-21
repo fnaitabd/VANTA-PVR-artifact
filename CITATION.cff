@@ -3,9 +3,11 @@ message: "If you use this artifact, please cite the accompanying VANTA/PVR prepr
 title: "VANTA-PVR Artifact"
 version: "1.0-arxiv"
 date-released: 2026-10-21
+doi: "10.5281/zenodo.23534795"
 license: MIT
-url: "https://github.com/fnaitabd/VANTA-PVR-artifact"
+url: "https://doi.org/10.5281/zenodo.23534795"
 repository-code: "https://github.com/fnaitabd/VANTA-PVR-artifact"
+repository-artifact: "https://doi.org/10.5281/zenodo.23534795"
 keywords:
   - carpet bombing
   - DDoS
@@ -17,8 +19,10 @@ keywords:
 authors:
   - family-names: "Naït-Abdesselam"
     given-names: "Farid"
+    orcid: "https://orcid.org/0000-0002-5042-5387"
   - family-names: "Lahlou"
     given-names: "Laaziz"
+    orcid: "https://orcid.org/0000-0002-8503-6779"
   - family-names: "Bentaoussy"
     given-names: "Doha"
   - family-names: "Lege"
@@ -27,6 +31,7 @@ authors:
     given-names: "Eve"
   - family-names: "Kara"
     given-names: "Nadjia"
+    orcid: "https://orcid.org/0000-0002-0061-3283"
 preferred-citation:
   type: article
   title: "Prefix Visibility Ratio: Quantifying Partial Observability in Carpet Bombing Detection"
