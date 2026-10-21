@@ -4,6 +4,10 @@ This repository contains the implementation and validated experimental material 
 
 This public release is a **frozen artifact for the validated campaign reported in the paper**. Ongoing experimental extensions and subsequent development are maintained separately and are not part of the results reported here.
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23534795.svg)](https://doi.org/10.5281/zenodo.23534795)
+
+Archived release DOI: **10.5281/zenodo.23534795**
+
 ## Authors
 
 Farid Naït-Abdesselam, Laaziz Lahlou, Doha Bentaoussy, Hugo Lege, Eve Lin, and Nadjia Kara.
@@ -174,7 +178,7 @@ Live commands refuse to start when an Open vSwitch bridge already exists unless 
 
 ## Citation
 
-Citation metadata is provided in `CITATION.cff`. Once the arXiv identifier and archival DOI are available, this metadata can be updated without changing the validated code or result files.
+Citation metadata is provided in `CITATION.cff`. The frozen artifact release is archived on Zenodo with DOI **10.5281/zenodo.23534795**. The arXiv identifier can be added once the preprint is public.
 
 ## License
 
